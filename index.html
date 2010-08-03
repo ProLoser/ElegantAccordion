@@ -14,6 +14,7 @@
             body{
                 font-family:Arial;
                 background:#fff url(pattern.png) repeat top left;
+                margin-bottom: 40px;
             }
             a{
                 color:#444;
@@ -24,10 +25,8 @@
             .title{
                 width:500px;
                 height:152px;
-                position:absolute;
-                top:0px;
-                left:0px;
                 background:transparent url(title.png) no-repeat top left;
+                text-indent: -5000px;
             }
             a.back{
                 background:transparent url(back.png) no-repeat top left;
@@ -40,19 +39,16 @@
             }
             #content{
                 margin:0 auto;
+                width: 955px;
             }
             .reference{
-                clear:both;
-                top:300px;
-                left:0px;
-                position:absolute;
-                text-align:right;
-                width:400px;
                 padding:20px;
+                float: right;
                 background-color:#fff;
                 -moz-box-shadow:1px 3px 15px #ddd;
                 -webkit-box-shadow:1px 3px 15px #ddd;
                 box-shadow:1px 3px 15px #ddd;
+                margin: 20px 40px 20px 520px;
             }
             .reference p a{
                 text-transform:uppercase;
@@ -64,103 +60,97 @@
             .reference p a:hover{
                 color:#333;
             }
-
+			.accordion {
+				clear: both;
+			}
         </style>
     </head>
 
     <body>
         <div id="content">
-            <a class="back" href="http://tympanus.net/codrops/2010/04/26/elegant-accordion-with-jquery-and-css3/"></a>
-            <div class="title"></div>
-            <div class="reference">
-                <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=901">Image 1: Michelle Meiklejohn / FreeDigitalPhotos.net</a></p>
-                <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=879">Image 2: Luigi Diamanti / FreeDigitalPhotos.net</a></p>
-                <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=503">Image 3: Tina Phillips / FreeDigitalPhotos.net</a></p>
-                <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=1039">Image 4: Ahmet Guler / FreeDigitalPhotos.net</a></p>
-            </div>
-
+        	
+	        <div class="reference">
+	            <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=901">Image 1: Michelle Meiklejohn / FreeDigitalPhotos.net</a></p>
+	            <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=879">Image 2: Luigi Diamanti / FreeDigitalPhotos.net</a></p>
+	            <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=503">Image 3: Tina Phillips / FreeDigitalPhotos.net</a></p>
+	            <p><a href="http://www.freedigitalphotos.net/images/view_photog.php?photogid=1039">Image 4: Ahmet Guler / FreeDigitalPhotos.net</a></p>
+	        </div>
+            <div class="title">Elegant Accordion with jQuery and CSS3</div>
 
             <ul class="accordion" id="accordion">
                 <li class="bg1">
-                    <div class="heading">Guler</div>
-                    <div class="bgDescription"></div>
-                    <div class="description">
-                        <h2>Guler</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                            nulla pariatur.</p>
-                        <a href="#">more &rarr;</a>
-                    </div>
+                    <h2>Guler</h2>
+	                <div>
+	                    <h2>Guler</h2>
+	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+	                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+	                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+	                        ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+	                        reprehenderit in voluptate velit esse cillum dolore eu fugiat
+	                        nulla pariatur.</p>
+	                    <a href="#">more &rarr;</a>
+	                </div>
                 </li>
                 <li class="bg2">
-                    <div class="heading">Phillips</div>
-                    <div class="bgDescription"></div>
-                    <div class="description">
-                        <h2>Phillips</h2>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                            quae ab illo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. </p>
-                        <a href="#">more &rarr;</a>
-                    </div>
-
+                    <h2>Phillips</h2>
+	                <div>
+	                    <h2>Phillips</h2>
+	                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+	                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+	                        quae ab illo inventore veritatis et quasi architecto beatae vitae
+	                        dicta sunt explicabo. </p>
+	                    <a href="#">more &rarr;</a>
+	                </div>
                 </li>
                 <li class="bg3">
-                    <div class="heading">Diamanti</div>
-                    <div class="bgDescription"></div>
-                    <div class="description">
-                        <h2>Diamanti</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                            nulla pariatur.</p>
-                        <a href="#">more &rarr;</a>
-                    </div>
-
+                    <h2>Diamanti</h2>
+	                <div>
+	                    <h2>Diamanti</h2>
+	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+	                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+	                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+	                        ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+	                        reprehenderit in voluptate velit esse cillum dolore eu fugiat
+	                        nulla pariatur.</p>
+	                    <a href="#">more &rarr;</a>
+	                </div>
                 </li>
-                <li class="bg4 bleft">
-                    <div class="heading">Meiklejohn</div>
-                    <div class="bgDescription"></div>
-                    <div class="description">
-                        <h2>Meiklejohn</h2>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                            quae ab illo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                            sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-                            dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                        <a href="#">more &rarr;</a>
-                    </div>
-
+                <li class="bg4">
+                    <h2>Meiklejohn</h2>
+	                <div>
+	                    <h2>Meiklejohn</h2>
+	                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+	                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+	                        quae ab illo inventore veritatis et quasi architecto beatae vitae
+	                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+	                        sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+	                        dolores eos qui ratione voluptatem sequi nesciunt.</p>
+	                    <a href="#">more &rarr;</a>
+	                </div>
                 </li>
             </ul>
+	        
+            <a class="back" href="http://tympanus.net/codrops/2010/04/26/elegant-accordion-with-jquery-and-css3/"></a>
         </div>
 
         <!-- The JavaScript -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.elegantAccordion.js"></script>
         <script type="text/javascript">
             $(function() {
-                $('#accordion > li').hover(
-                    function () {
-                        var $this = $(this);
-                        $this.stop().animate({'width':'480px'},500);
-                        $('.heading',$this).stop(true,true).fadeOut();
-                        $('.bgDescription',$this).stop(true,true).slideDown(500);
-                        $('.description',$this).stop(true,true).fadeIn();
-                    },
-                    function () {
-                        var $this = $(this);
-                        $this.stop().animate({'width':'115px'},1000);
-                        $('.heading',$this).stop(true,true).fadeIn();
-                        $('.description',$this).stop(true,true).fadeOut(500);
-                        $('.bgDescription',$this).stop(true,true).slideUp(700);
-                    }
-                );
+                $('#accordion').eAccordion({
+					easing: 'swing',                // Anything other than "linear" or "swing" requires the easing plugin
+					autoPlay: true,                 // This turns off the entire FUNCTIONALY, not just if it starts running or not
+					startStopped: false,            // If autoPlay is on, this can force it to start stopped
+					stopAtEnd: false,				// If autoplay is on, it will stop when it reaches the last slide
+					delay: 3000,                    // How long between slide transitions in AutoPlay mode
+					animationTime: 600,             // How long the slide transition takes
+					hashTags: true,                 // Should links change the hashtag in the URL?
+					pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
+					width: null,					// Override the default CSS width
+					height: null,					// Override the default CSS height
+					expandedWidth: '480px',			// Width of the expanded slide
+				});
             });
         </script>
     </body>

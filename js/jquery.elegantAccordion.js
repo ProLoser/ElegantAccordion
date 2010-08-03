@@ -7,7 +7,7 @@
 
 (function($) {
 	
-	__eAccordionRunTimes = 0; 
+	var __eAccordionRunTimes = 0; 
 	
 	$.eAccordion = function(el, options) {
 		
@@ -15,11 +15,11 @@
 		// to reference this class from internal events and functions.
 		var base = this;
 	  
-    	// Keeps track of the index of the current instance
-		__eAccordionrRunTimes++;
+		// Keeps track of the index of the current instance
+		__eAccordionRunTimes++;
 		base.runTimes = __eAccordionRunTimes;
 			
-		// Wraps the ul in the necessary divs and then gives Access to jQuery element
+		// Gives Access to jQuery element
 		base.$el = $(el);
 		
 		// Set up a few defaults
@@ -31,35 +31,36 @@
 		base.$el.data("ElegantAccordion", base);
 		  
 		base.init = function() {
-		 			
+					
 			base.options = $.extend({},$.eAccordion.defaults, options);
 				
 			// Cache existing DOM elements for later 
-			base.$wrapper = base.$el.find('> div');
-			base.$slider  = base.$wrapper.find('> ul');
-			base.$items   = base.$slider.find('> li');
-			base.$single  = base.$items.filter(':first');
+			base.$items   = base.$el.children('li');
+			base.$single  = base.$items.first();
 			
 			// Set the dimensions
 			if (base.options.width) {
 				base.$el.css('width', base.options.width);
-				base.$wrapper.css('width', base.options.width);
-				base.$items.css('width', base.options.width);
 			}
 			if (base.options.height) {
 				base.$el.css('height', base.options.height);
-				base.$wrapper.css('height', base.options.height);
-				base.$items.css('height', base.options.height);
 			}
 	
 			// Get the details
-			base.singleWidth = base.$single.outerWidth();
 			base.pages = base.$items.length;
+			var expandedWidth;
+			if (base.options.expandedWidth.indexOf("%") > -1) {
+				expandedWidth = base.$el.width() * (parseInt(base.options.expandedWidth) / 100);
+			} else {
+				expandedWidth = parseInt(base.options.expandedWidth);
+			}
+			base.contractedWidth = (base.$el.width() - expandedWidth) / (base.pages - 1);
+			
 			
 			// If autoPlay functionality is included, then initialize the settings
 			if (base.options.autoPlay) {
 				base.playing = !base.options.startStopped; // Sets the playing variable to false if startStopped is true
-				base.buildAutoPlay();
+				base.startStop(base.playing);
 			};
 			
 			// If pauseOnHover then add hover effects
@@ -71,37 +72,23 @@
 				});
 			}
 			
+			// Add formatting
+			base.$items.prepend('<div class="bgGradient"/>').hover(function () {
+				base.startStop(false);
+				base.gotoPage(base.$items.index(this) + 1);
+			},function(){
+				base.startStop(true);
+			}).children('div').width(expandedWidth);
+			
 			// If a hash can not be used to trigger the plugin, then go to page 1
 			if ((base.options.hashTags == true && !base.gotoHash()) || base.options.hashTags == false) {
-				base.setCurrentPage(1);
+				base.gotoPage(1, false);
 			};
-			
-			// Install the accordion effect
-			if (base.$el.attr('rel')) {
-				dimensions = base.$el.attr('rel').match(/\d+/g);
-				width = dimensions[0];
-				height = dimensions[1];
-				$('> li', base.$el).height(height);
-			}
-			$('> li', base.$el).prepend('<div class="bgGradient"/>').hover(
-		        function () {
-		        	base.startStop(false);
-		            base.$el.stop().animate({'width':'480px'},500).siblings().stop().animate({'width':'100px'},500);
-		            $('h2', base.$el).stop(true,true).fadeOut();
-		            $('> div:not(.bgGradient)', base.$el).stop(true,true).fadeIn();
-		            $('.bgGradient', base.$el).stop(true,true).animate({bottom:0},500);
-		        }, null
-		    );
 		}
-	
-		base.gotoPage = function(page, autoplay) {
-			// When autoplay isn't passed, we stop the timer
-			if (autoplay !== true) autoplay = false;
-			if (!autoplay) base.startStop(false);
 			
+		base.gotoPage = function(page, animate) {
 			if (typeof(page) == "undefined" || page == null) {
 				page = 1;
-				base.setCurrentPage(1);
 			};
 			
 			// Stop the slider when we reach the last page, if the option stopAtEnd is set to true
@@ -109,44 +96,58 @@
 				if(page == base.pages) base.startStop(false);
 			}
 			
+			
 			// Just check for bounds
-			if (page > base.pages + 1) page = base.pages;
-			if (page < 0 ) page = 1;
-	
-			var dir = page < base.currentPage ? -1 : 1,
-				n = Math.abs(base.currentPage - page),
-				left = base.singleWidth * dir * n;
+			if (page > base.pages) page = 1;
+			if (page < 1) page = 1;
 			
-			base.$wrapper.filter(':not(:animated)').animate({
-				scrollLeft : '+=' + left
-			}, base.options.animationTime, base.options.easing, function () {
-				if (page == 0) {
-					base.$wrapper.scrollLeft(base.singleWidth * base.pages);
-					page = base.pages;
-				} else if (page > base.pages) {
-					base.$wrapper.scrollLeft(base.singleWidth);
-					// reset back to start position
-					page = 1;
-				}
-	  
-				base.setCurrentPage(page);
-			});
-		};
+			// Store the page to be shown
+			var $page = base.$items.eq(page - 1);
 			
-		base.setCurrentPage = function(page, move) {
-			// Set visual
-			if (base.options.buildNavigation){
-				base.$nav.find('.cur').removeClass('cur');
-				$(base.$navLinks[page - 1]).addClass('cur');
-			};
+			if (animate !== false) {
+				$page.stop().animate(
+					{'width':base.options.expandedWidth},
+					base.options.animationTime,
+					base.options.easing
+				).siblings().stop().animate({
+					'width':base.contractedWidth},
+					base.options.animationTime,
+					base.options.easing
+				);
+				$page.children('h2').stop(true,true).fadeOut();
+				$page.children('div:not(.bgGradient)').stop(true,true).fadeIn();
+				$page.children('.bgGradient').stop(true,true).animate(
+					{bottom:0},
+					base.options.animationTime
+				);
+				$page.siblings().children('h2').stop(true,true).fadeIn();
+				$page.siblings().children('div:not(.bgGradient)').stop(true,true).fadeOut();
+				$page.siblings().children('.bgGradient').stop(true,true).animate(
+					{bottom:'-340px'},
+					base.options.animationTime
+				);
+			} else {
+				$page.width(base.options.expandedWidth).siblings().width(base.contractedWidth);
+				$page.children('h2').hide();
+				$page.children('div:not(.bgGradient)').show();
+				$page.children('.bgGradient').css('bottom','0');
+				$page.siblings().children('h2').show();
+				$page.siblings().children('div:not(.bgGradient)').hide();
+				$page.siblings().children('.bgGradient').css('bottom','-340px');
+			}
 			
-			// Only change left if move does not equal false
-			if (move !== false) base.$wrapper.scrollLeft(base.singleWidth * page);
-	
 			// Update local variable
 			base.currentPage = page;
 		};
 			
+		base.goForward = function() {
+			base.gotoPage(base.currentPage + 1);
+		};
+
+		base.goBack = function() {
+			base.gotoPage(base.currentPage - 1);
+		};
+		
 		// This method tries to find a hash that matches panel-X
 		// If found, it tries to find a matching item
 		// If that is found as well, then that item starts visible
@@ -158,7 +159,7 @@
 					var slide = parseInt(hash[2]);
 					var $item = base.$items.filter(':eq(' + slide + ')');
 					if ($item.length != 0) {
-						base.setCurrentPage(slide);
+						base.gotoPage(slide, false);
 						return true;
 					}
 				}
@@ -174,13 +175,10 @@
 			// Update variable
 			base.playing = playing;
 			
-			// Toggle playing and text
-			if (base.options.autoPlay) base.$startStop.toggleClass("playing", playing).html( playing ? base.options.stopText : base.options.startText );
-			
 			if (playing){
 				base.clearTimer(); // Just in case this was triggered twice in a row
 				base.timer = window.setInterval(function() {
-					base.goForward(true);
+					base.goForward();
 				}, base.options.delay);
 			} else {
 				base.clearTimer();
@@ -213,14 +211,17 @@
 	};
 
 	$.eAccordion.defaults = {
+		easing: 'linear',                // Anything other than "linear" or "swing" requires the easing plugin
 		autoPlay: true,                 // This turns off the entire FUNCTIONALY, not just if it starts running or not
 		startStopped: false,            // If autoPlay is on, this can force it to start stopped
+		stopAtEnd: false,				// If autoplay is on, it will stop when it reaches the last slide
 		delay: 3000,                    // How long between slide transitions in AutoPlay mode
 		animationTime: 600,             // How long the slide transition takes
 		hashTags: true,                 // Should links change the hashtag in the URL?
 		pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
 		width: null,					// Override the default CSS width
 		height: null,					// Override the default CSS height
+		expandedWidth: '60%',				// Width of the expanded slide
 	};
 	
 	$.fn.eAccordion = function(options) {
