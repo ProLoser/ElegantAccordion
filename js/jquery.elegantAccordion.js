@@ -39,11 +39,8 @@
 			base.$single  = base.$items.first();
 			
 			// Set the dimensions
-			if (base.options.width) {
-				base.$el.css('width', base.options.width);
-			}
 			if (base.options.height) {
-				base.$el.css('height', base.options.height);
+				base.$items.css('height', base.options.height);
 			}
 	
 			// Get the details
@@ -77,7 +74,11 @@
 				base.startStop(false);
 				base.gotoPage(base.$items.index(this) + 1);
 			},function(){
-				base.startStop(true);
+				if (!base.clickStopped) base.startStop(true);
+			}).click(function () {
+				base.startStop(false);
+				// Prevents the hover-out from re-enabling
+				base.clickStopped = true;
 			}).children('div').width(expandedWidth);
 			
 			// If a hash can not be used to trigger the plugin, then go to page 1
@@ -111,7 +112,7 @@
 					base.options.easing
 				).siblings().stop().animate({
 					'width':base.contractedWidth},
-					base.options.animationTime,
+					base.options.animationTime - 10,
 					base.options.easing
 				);
 				$page.children('h2').stop(true,true).fadeOut();
@@ -219,7 +220,6 @@
 		animationTime: 600,             // How long the slide transition takes
 		hashTags: true,                 // Should links change the hashtag in the URL?
 		pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
-		width: null,					// Override the default CSS width
 		height: null,					// Override the default CSS height
 		expandedWidth: '60%',				// Width of the expanded slide
 	};
