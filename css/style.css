@@ -36,6 +36,7 @@ ul.accordion li{
     position:relative;
     overflow:hidden;
     cursor:pointer;
+    margin: 0;
     -moz-box-shadow:1px 3px 15px #555;
     -webkit-box-shadow:1px 3px 15px #555;
     box-shadow:1px 3px 15px #555;
