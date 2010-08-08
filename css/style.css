@@ -1,15 +1,3 @@
-ul.accordion li.bg1{
-    background-image:url(../images/1.jpg);
-}
-ul.accordion li.bg2{
-    background-image:url(../images/2.jpg);
-}
-ul.accordion li.bg3{
-    background-image:url(../images/3.jpg);
-}
-ul.accordion li.bg4{
-    background-image:url(../images/4.jpg);
-}
 ul.accordion{
     list-style:none;   
     font-family: Cambria, serif;
@@ -17,6 +5,7 @@ ul.accordion{
     font-style: italic;
     line-height: 1.5em;
     overflow: hidden;
+    padding: 0;
     -moz-box-shadow:1px 3px 15px #555;
     -webkit-box-shadow:1px 3px 15px #555;
     box-shadow:1px 3px 15px #555;

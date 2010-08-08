@@ -7,61 +7,109 @@
         <meta name="keywords" content="jquery, slide out,accordion, css3, fadeout, fadein, elegant, fancy, box shadow"/>
         <link rel="stylesheet" href="css/style.css" type="text/css" media="screen"/>
         <style>
-            *{
-                margin:0;
-                padding:0;
-            }
-            body{
-                font-family:Arial;
-                background:#fff url(pattern.png) repeat top left;
-                margin-bottom: 40px;
-            }
-            a{
-                color:#444;
-            }
-            a:hover{
-                color:#999;
-            }
-            .title{
-                width:500px;
-                height:152px;
-                background:transparent url(title.png) no-repeat top left;
-                text-indent: -5000px;
-            }
-            a.back{
-                background:transparent url(back.png) no-repeat top left;
-                position:fixed;
-                width:150px;
-                height:27px;
-                outline:none;
-                bottom:0px;
-                left:0px;
-            }
-            #content{
-                margin:0 auto;
-                width: 955px;
-            }
-            .reference{
-                padding:20px;
-                float: right;
-                background-color:#fff;
-                -moz-box-shadow:1px 3px 15px #ddd;
-                -webkit-box-shadow:1px 3px 15px #ddd;
-                box-shadow:1px 3px 15px #ddd;
-                margin: 20px 40px 20px 520px;
-            }
-            .reference p a{
-                text-transform:uppercase;
-                text-shadow:1px 1px 1px #fff;
-                color:#666;
-                text-decoration:none;
-                font-size:10px;
-            }
-            .reference p a:hover{
-                color:#333;
-            }
+			*{
+				margin:0;
+				padding:0;
+			}
+			body{
+				font-family:Arial;
+				background:#fff url(pattern.png) repeat top left;
+				margin-bottom: 40px;
+			}
+			h2{
+				margin: 20px 0;
+			}
+			h2 a {
+				padding: 10px;
+				text-decoration: none;
+				background: #000;
+				color: #fff;
+				box-shadow: 0 0 10px #000;
+				-webkit-box-shadow: 0 0 10px #000;
+				-moz-box-shadow: 0 0 10px #000;
+				border-radius: 20px;
+			}
+			h3 {
+				margin-top: 10px;
+			}
+			ul{
+				padding: 10px 10px 10px 30px;
+				box-shadow: 0 0 10px #ccc;
+				-webkit-box-shadow: 0 0 10px #ccc;
+				-moz-box-shadow: 0 0 10px #ccc;
+				background: #fff;
+			}
+			ul ul {
+				box-shadow: none;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+			}
+			li{
+				margin: 5px
+			}
+			pre {
+				-webkit-box-shadow: 0 0 10px #ccc;
+				padding: 10px;
+				background: #fff;
+			}
+			a{
+				color:#444;
+			}
+			a:hover{
+				color:#999;
+			}
+			.title{
+				width:500px;
+				height:152px;
+				background:transparent url(title.png) no-repeat top left;
+				text-indent: -5000px;
+			}
+			a.back{
+				background:transparent url(back.png) no-repeat top left;
+				position:fixed;
+				width:150px;
+				height:27px;
+				outline:none;
+				bottom:0px;
+				left:0px;
+			}
+			#content{
+				margin:0 auto;
+				width: 955px;
+			}
+			.reference{
+				padding:20px;
+				float: right;
+				background-color:#fff;
+				-moz-box-shadow:1px 3px 15px #ddd;
+				-webkit-box-shadow:1px 3px 15px #ddd;
+				box-shadow:1px 3px 15px #ddd;
+				margin: 20px 40px 20px 520px;
+			}
+			.reference p a{
+				text-transform:uppercase;
+				text-shadow:1px 1px 1px #fff;
+				color:#666;
+				text-decoration:none;
+				font-size:10px;
+			}
+			.reference p a:hover{
+				color:#333;
+			}
 			.accordion {
 				clear: both;
+			}
+			ul.accordion li.bg1{
+				background-image:url(images/1.jpg);
+			}
+			ul.accordion li.bg2{
+				background-image:url(images/2.jpg);
+			}
+			ul.accordion li.bg3{
+				background-image:url(images/3.jpg);
+			}
+			ul.accordion li.bg4{
+				background-image:url(images/4.jpg);
 			}
         </style>
     </head>
@@ -129,42 +177,54 @@
 	                </div>
                 </li>
             </ul>
-	        
-            <h2>Features</h2>
-            <ul>
-            	<li></li>
-            	<li></li>
-            	<li></li>
-            	<li></li>
-            </ul>
             
-            <h2>Usage &amp; Options (Defaults)</h2> 
+	        <div id="info">
+	        	<h2><a href="http://github.com/ProLoser/ElegantAccordion">Code + Download</a></h2>
+	            <h2>Features</h2>
+	            <ul>
+	            	<li>Auto-rotate through all the slides with extra options
+	            		<ul>
+	            			<li>Pause on hover</li>
+	            			<li>Stop rotation on click of a slide</li>
+	            			<li>Option to stop rotation at the end of the slides</li>
+	            		</ul>
+	            	</li>
+	            	<li>Options for setting delay, animation speed and easing</li>
+	            	<li>Ability to set active slide onload using hashes (index.html#panel1-3)</li>
+	            	<li>Works with multiple instances on the page</li>
+	            	<li>Ability to specify width of active slide while automatically adjusting inactive slides</li>
+	            </ul>
+	            
+	            <h2>Usage &amp; Options (Defaults)</h2> 
 <pre>$('.accordion').eAccordion({
 	easing: 'swing',                // Anything other than "linear" or "swing" requires the easing plugin
 	autoPlay: true,                 // This turns off the entire FUNCTIONALY, not just if it starts running or not
 	startStopped: false,            // If autoPlay is on, this can force it to start stopped
-	stopAtEnd: false,				// If autoplay is on, it will stop when it reaches the last slide
+	stopAtEnd: false,		// If autoplay is on, it will stop when it reaches the last slide
 	delay: 3000,                    // How long between slide transitions in AutoPlay mode
 	animationTime: 600,             // How long the slide transition takes
 	hashTags: true,                 // Should links change the hashtag in the URL?
 	pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
-	width: null,					// Override the default CSS width
-	height: null,					// Override the default CSS height
-	expandedWidth: '480px',			// Width of the expanded slide in pixels or percent (default px). Remaining slide sizes will be automatically adjusted
+	width: null,			// Override the default CSS width
+	height: null,			// Override the default CSS height
+	expandedWidth: '480px',		// Width of the expanded slide in pixels or percent (defaults to px), remaining slide sizes will be automatically adjusted
 });</pre> 
- 
-		<h3>Linking directly to slides</h3> 
-		<pre>$("#slide-jump").click(function(){
+	 
+			<h3>Linking directly to slides</h3> 
+<pre>$("#slide-jump").click(function(){
 	$('.accordion').eq(1).eAccordion(4);
 });</pre> 
- 
-		<h2>Changelog</h2>
-		<h3>Version 1.0</h3>
-        <ul>
-        	<li></li>
-        	<li></li>
-        	<li></li>
-        </ul>
+	 
+			<h2>Changelog</h2>
+			<h3>Version 0.1</h3>
+	        <ul>
+	        	<li>Turned into a jQuery plugin (using AnythingSlider as a base)</li>
+	        	<li>Greatly refactored css/html markup required to generate the effect</li>
+	        	<li>Added options to specify transition times and effects and other options</li>
+	        	<li>Created an auto-rotation behavior</li>
+	        	<li>Installed default loaded slide behavior using hashtags</li>
+	        </ul>
+	        </div>
             
             <a class="back" href="http://tympanus.net/codrops/2010/04/26/elegant-accordion-with-jquery-and-css3/"></a>
         </div>
