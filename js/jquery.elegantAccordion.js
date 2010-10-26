@@ -49,9 +49,9 @@
 			// Get the details
 			base.pages = base.$items.length;
 			var expandedWidth;
-			if (base.options.expandedWidth.indexOf("%") > -1) {
+			if (base.options.expandedWidth.indexOf("%") > -1) { // If a percent is given
 				expandedWidth = base.$el.width() * (parseInt(base.options.expandedWidth) / 100);
-			} else {
+			} else { // Otherwise use pixels
 				expandedWidth = parseInt(base.options.expandedWidth);
 			}
 			base.contractedWidth = (base.$el.width() - expandedWidth) / (base.pages - 1);
@@ -115,7 +115,7 @@
 					base.options.easing
 				).siblings().stop().animate({
 					'width':base.contractedWidth},
-					base.options.animationTime - 10,
+					base.options.animationTime,
 					base.options.easing
 				);
 				$page.children('h2').stop(true,true).fadeOut();
