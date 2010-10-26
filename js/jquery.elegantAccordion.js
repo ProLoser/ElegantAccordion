@@ -36,7 +36,10 @@
 				
 			// Cache existing DOM elements for later 
 			base.$items   = base.$el.children('li');
-			base.$single  = base.$items.first();
+			base.$single  = base.$items.last();
+			
+			// Fix jittering during animation
+			base.$single.css('margin-right', '-20px');
 			
 			// Set the dimensions
 			if (base.options.height) {
