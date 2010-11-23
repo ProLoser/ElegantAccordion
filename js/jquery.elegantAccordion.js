@@ -32,9 +32,9 @@
 		  
 		base.init = function() {
 					
-			base.options = $.extend({},$.eAccordion.defaults, options);
+			base.options = $.extend({}, $.eAccordion.defaults, options);
 				
-			// Cache existing DOM elements for later 
+			// Cache existing DOM elements for later
 			base.$items   = base.$el.children('li');
 			base.$single  = base.$items.last();
 			
@@ -54,6 +54,7 @@
 			} else { // Otherwise use pixels
 				expandedWidth = parseInt(base.options.expandedWidth);
 			}
+			base.neutralWidth = (100 / base.pages) + '%';
 			base.contractedWidth = (base.$el.width() - expandedWidth) / (base.pages - 1);
 			
 			
@@ -64,7 +65,7 @@
 			};
 			
 			// If pauseOnHover then add hover effects
-			if (base.options.pauseOnHover) {
+			if (base.options.pauseOnHover && base.options.autoPlay) {
 				base.$el.hover(function() {
 					base.clearTimer();
 				}, function() {
@@ -77,7 +78,10 @@
 				base.startStop(false);
 				base.gotoPage(base.$items.index(this) + 1);
 			},function(){
-				if (!base.clickStopped) base.startStop(true);
+				// base.gotoNeutral(true); // TODO add neutral states upon mouse-out
+				if (!base.clickStopped && base.options.autoPlay) {
+					base.startStop(true);
+				}
 			}).click(function () {
 				base.startStop(false);
 				// Prevents the hover-out from re-enabling
@@ -109,39 +113,68 @@
 			var $page = base.$items.eq(page - 1);
 			
 			if (animate !== false) {
-				$page.stop().animate(
-					{'width':base.options.expandedWidth},
-					base.options.animationTime,
-					base.options.easing
-				).siblings().stop().animate({
-					'width':base.contractedWidth},
-					base.options.animationTime,
-					base.options.easing
-				);
-				$page.children('h2').stop(true,true).fadeOut();
-				$page.children('div:not(.bgGradient)').stop(true,true).fadeIn();
-				$page.children('.bgGradient').stop(true,true).animate(
-					{bottom:0},
-					base.options.animationTime
-				);
-				$page.siblings().children('h2').stop(true,true).fadeIn();
-				$page.siblings().children('div:not(.bgGradient)').stop(true,true).fadeOut();
-				$page.siblings().children('.bgGradient').stop(true,true).animate(
-					{bottom:'-340px'},
-					base.options.animationTime
-				);
+				if (base.options.efficient) {
+					$page.stop().animate(
+						{'width':base.options.expandedWidth},
+						base.options.animationTime,
+						base.options.easing
+					).switchClass('neutral', 'active', base.options.animationTime).siblings().stop().animate({
+						'width':base.contractedWidth},
+						base.options.animationTime,
+						base.options.easing
+					).removeClass('active neutral', base.options.animationTime);
+				} else {
+					$page.stop(true, true).animate(
+						{'width':base.options.expandedWidth},
+						base.options.animationTime,
+						base.options.easing
+					).siblings().stop(true, true).animate({
+						'width':base.contractedWidth},
+						base.options.animationTime,
+						base.options.easing
+					);
+					// .find('*') Needs to be cached
+					$page.find('*').stop(true, true).switchClass('neutral', 'active', base.options.animationTime);
+					$page.siblings().find('*').stop(true, true).removeClass('active neutral', base.options.animationTime);
+				}
 			} else {
 				$page.width(base.options.expandedWidth).siblings().width(base.contractedWidth);
-				$page.children('h2').hide();
-				$page.children('div:not(.bgGradient)').show();
-				$page.children('.bgGradient').css('bottom','0');
-				$page.siblings().children('h2').show();
-				$page.siblings().children('div:not(.bgGradient)').hide();
-				$page.siblings().children('.bgGradient').css('bottom','-340px');
+				if (base.options.efficient) {
+					$page.switchClass('neutral', 'active');
+					$page.siblings().removeClass('active neutral');
+				} else {
+					$page.find('*').switchClass('neutral', 'active');
+					$page.siblings().find('*').removeClass('active neutral');
+				}
 			}
 			
 			// Update local variable
 			base.currentPage = page;
+		};
+		
+		base.gotoNeutral = function(animate){
+			if (animate !== false) {
+				if (base.options.efficient) {
+					base.$items.stop(true, true).animate(
+						{'width':base.neutralWidth},
+						base.options.animationTime,
+						base.options.easing
+					).switchClass('active', 'neutral', base.options.animationTime);
+				} else {
+					base.$items.stop(true, true).animate(
+						{'width':base.neutralWidth},
+						base.options.animationTime,
+						base.options.easing
+					).find('*').switchClass('active', 'neutral', base.options.animationTime);
+				}
+			} else {
+				base.$items.width(base.neutralWidth);
+				if (base.options.efficient) {
+					base.$items.switchClass('active', 'neutral');
+				} else {
+					base.$items.find('*').switchClass('active', 'neutral');
+				}
+			}
 		};
 			
 		base.goForward = function() {
@@ -215,16 +248,18 @@
 	};
 
 	$.eAccordion.defaults = {
-		easing: 'linear',                // Anything other than "linear" or "swing" requires the easing plugin
+		easing: 'swing',                // Anything other than "linear" or "swing" requires the easing plugin
 		autoPlay: true,                 // This turns off the entire FUNCTIONALY, not just if it starts running or not
 		startStopped: false,            // If autoPlay is on, this can force it to start stopped
 		stopAtEnd: false,				// If autoplay is on, it will stop when it reaches the last slide
-		delay: 3000,                    // How long between slide transitions in AutoPlay mode
-		animationTime: 600,             // How long the slide transition takes
+		delay: 4000,                    // How long between slide transitions in AutoPlay mode
+		animationTime: 100,             // How long the slide transition takes
 		hashTags: true,                 // Should links change the hashtag in the URL?
 		pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
 		height: null,					// Override the default CSS height
-		expandedWidth: '60%',				// Width of the expanded slide
+		expandedWidth: '60%',			// Width of the expanded slide
+		efficient: false,				// If true, applies the state classes (active/neutral) to the li's instead of its children
+		neutralState: false				// If there should be a state when all pages are equal size (usually onMouseOut)
 	};
 	
 	$.fn.eAccordion = function(options) {

@@ -1,4 +1,4 @@
-ul.accordion{
+.accordion {
     list-style:none;   
     font-family: Cambria, serif;
     font-size: 16px;
@@ -12,71 +12,75 @@ ul.accordion{
     /*border-top:2px solid #fff;
         border-left:2px solid #fff;*/
 }
-ul.accordion li{
-    float:left;
-    width:10%;
-    height:400px;
-    display:block;
+.accordion li {
+	top: 0;
+	left: 0;
+    float: left;
+    width: 10%;
+    height: 400px;
+    display: block;
     /*border-right:2px solid #fff;
         border-bottom:2px solid #fff;*/
-    background-color:#fff;
-    background-repeat:no-repeat;
-    background-position:center center;
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
     margin: 0;
     -moz-box-shadow:1px 3px 15px #555;
     -webkit-box-shadow:1px 3px 15px #555;
     box-shadow:1px 3px 15px #555;
 }
-ul.accordion li h2{
-    background-color:#fff;
-    padding:10px 0;
-    opacity:0.9;
+.accordion h2 {
+    background-color: #fff;
+    padding: 10px 0;
+    opacity: 0.9;
     top: 50px;
     width: 100%;
     position: absolute;
-    text-transform:uppercase;
-    font-style:normal;
-    font-weight:bold;
-    letter-spacing:1px;
-    font-size:14px;
-    color:#444;
-    text-align:center;
-    text-shadow:-1px -1px 1px #ccc;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+    text-shadow: -1px -1px 1px #ccc;
+    -moz-text-shadow: -1px -1px 1px #ccc;
+    -webkit-text-shadow: -1px -1px 1px #ccc;
 }
-ul.accordion li div.bgGradient {
-    background:transparent url(../images/bgDescription.png) repeat-x bottom center;
-    display: block;
+.accordion div.bgGradient {
+    background: transparent url(../images/bgDescription.png) repeat-x bottom center;
     bottom: -340px;
     height: 340px;
 }
-ul.accordion li div{
-    position:absolute;
-    bottom:0px;
-    left:0px;
-    display:none;
+.accordion div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
 }
-ul.accordion li div h2{
+.accordion div h2 {
     background: none;
     padding: 0;
-    height: auto;
     position: static;
     opacity: 1;
-    text-transform:uppercase;
-    font-style:normal;
-    font-weight:bold;
-    letter-spacing:1px;
-    font-size:20px;
-    color:#444;
-    text-align:left;
-    margin:0px 0px 15px 20px;
-    text-shadow:-1px -1px 1px #ccc;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 20px;
+    color: #444;
+    text-align: left;
+    margin: 0px 0px 15px 20px;
+    text-shadow: -1px -1px 1px #ccc;
+    -moz-text-shadow: -1px -1px 1px #ccc;
+    -webkit-text-shadow: -1px -1px 1px #ccc;
 }
-ul.accordion li div p{
-    line-height:14px;
-    margin:10px 22px;
+.accordion div p {
+    line-height: 14px;
+    margin: 10px 22px;
     font-family: "Trebuchet MS", sans-serif;
     font-size: 12px;
     font-style: italic;
@@ -85,16 +89,33 @@ ul.accordion li div p{
     letter-spacing: normal;
     line-height: 1.6em;
 }
-ul.accordion li div a{
+.accordion div a {
 	display: block;
     margin: 5px 0 5px 20px;
-    text-transform:uppercase;
-    font-style:normal;
-    font-size:11px;
-    text-decoration:none;
-    color:#888;
+    text-transform: uppercase;
+    font-style: normal;
+    font-size: 11px;
+    text-decoration: none;
+    color: #888;
 }
-ul.accordion li div a:hover{
-    color:#333;
-    text-decoration:underline;
+.accordion div a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+/** Active States **/
+.accordion h2.active, .accordion .active h2 {
+	opacity: 0;
+}
+.accordion .bgGradient.active, .accordion .active .bgGradient {
+	bottom: 0;
+}
+.accordion div.active, .accordion .active div {
+	opacity: .9;
+}
+.accordion div h2.active, .accordion .active div h2 {
+	opacity: 1;
+}
+.accordion div h2 span.active, .accordion .active div h2 span {
+	
 }
