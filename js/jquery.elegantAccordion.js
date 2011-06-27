@@ -74,7 +74,7 @@
 			}
 			
 			// Add formatting
-			base.$items.prepend('<div class="bgGradient"/>').hover(function () {
+			base.$items.hover(function () {
 				base.startStop(false);
 				base.gotoPage(base.$items.index(this) + 1);
 			},function(){
@@ -114,11 +114,11 @@
 			
 			if (animate !== false) {
 				if (base.options.efficient) {
-					$page.stop().animate(
+					$page.stop(true, true).animate(
 						{'width':base.options.expandedWidth},
 						base.options.animationTime,
 						base.options.easing
-					).switchClass('neutral', 'active', base.options.animationTime).siblings().stop().animate({
+					).switchClass('neutral', 'active', base.options.animationTime).siblings().stop(true, true).animate({
 						'width':base.contractedWidth},
 						base.options.animationTime,
 						base.options.easing

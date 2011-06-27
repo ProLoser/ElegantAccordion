@@ -50,16 +50,15 @@
     -moz-text-shadow: -1px -1px 1px #ccc;
     -webkit-text-shadow: -1px -1px 1px #ccc;
 }
-.accordion div.bgGradient {
-    background: transparent url(../images/bgDescription.png) repeat-x bottom center;
-    bottom: -340px;
-    height: 340px;
-}
 .accordion div {
     position: absolute;
     bottom: 0;
     left: 0;
     opacity: 0;
+    background: transparent url(../images/bgDescription.png) repeat-x bottom center;
+	padding-top: 340px;
+	padding-bottom: 340px;
+	margin-bottom: -340px;
 }
 .accordion div h2 {
     background: none;
@@ -112,6 +111,8 @@
 }
 .accordion div.active, .accordion .active div {
 	opacity: .9;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 .accordion div h2.active, .accordion .active div h2 {
 	opacity: 1;
