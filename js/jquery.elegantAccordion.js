@@ -71,12 +71,17 @@
 				});
 			}
 			
+			// Add background images if set
+			base.$items.each(function() {
+				var $li = $(this);
+				$li.css('backgroundImage', 'url(' + $li.data('bg') + ')' ); 
+			});
+			
 			// Add formatting
 			base.$items.hover(function () {
 				base.startStop(false);
 				base.gotoPage(base.$items.index(this) + 1);
 			},function(){
-				// base.gotoNeutral(true); // TODO add neutral states upon mouse-out
 				if (!base.clickStopped) {
 					if (base.options.autoPlay) {
 						base.startStop(true);
@@ -95,6 +100,7 @@
 				base.gotoPage(1, false);
 			};
 			
+			// Enable neutral state
 			if (base.options.neutralState) {
 				base.neutralWidth = (100 / base.pages) + '%';
 				base.gotoNeutral(false);
@@ -246,7 +252,7 @@
 		height: null,					// Override the default CSS height
 		expandedWidth: '60%',			// Width of the expanded slide
 		neutralState: false,			// If there should be a state when all pages are equal size (usually onMouseOut)
-		bgHeight: '340px'				// The height of the gradient image. Useful if you're modifying the image
+		bgHeight: '340px'				// The height of the gradient image (bgDescription.png). Useful if you're modifying the image
 	};
 	
 	$.fn.eAccordion = function(options) {

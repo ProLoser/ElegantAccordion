@@ -196,10 +196,11 @@
 				<li>Ability to set active slide onload using hashes (index.html#panel1-3)</li>
 				<li>Works with multiple instances on the page</li>
 				<li>Ability to specify width of active slide while automatically adjusting inactive slides</li>
+				<li>You can now do &lt;li data-bg="path/to/bg1.jpg"&gt; on each cell and the image will be added via js! However, hardcoding the images reduces <a href="http://bluerobot.com/web/css/fouc.asp/" title="Flash Of Unstyled Content">FOUC</a></li>
 			</ul>
 			
 			<h2>Usage &amp; Options (Defaults)</h2>
-			<p>Requires jQuery and jQuery UI core</p>
+			<p>Requires jQuery</p>
 <pre>$('.accordion').eAccordion({
 	easing: 'swing',	// Anything other than "linear" or "swing" requires the easing plugin
 	autoPlay: true,		// This turns off the entire FUNCTIONALY, not just if it starts running or not
@@ -212,6 +213,7 @@
 	height: null,		// Override the default CSS height
 	expandedWidth: '60%',	// Width of the expanded slide
 	neutralState: false // If there should be a state when all pages are equal size (usually onMouseOut)
+	bgHeight: '340px'	// The height of the gradient image (bgDescription.png). Useful if you're modifying the image
 });</pre> 
  
 		<h3>Linking directly to slides</h3> 
@@ -220,21 +222,29 @@
 });</pre> 
  
 		<h2>Changelog</h2>
+		<h3>Version 0.3</h3>
+		<ul>
+			<li>Added <code>bgHeight</code> option so you can modify the gradient background image</li>
+			<li>Fixed <code>neutralState</code></li>
+			<li>Reverted back to hardcoded animations (for now). Fixes IE7 animations. Reduced # of animations for brevity</li>
+			<li>Dropped jQuery UI dependency (due to above changes)</li>
+			<li>OPTIONAL: You can now do &lt;li data-bg="path/to/bg1.jpg"&gt; on each cell and the image will be added via js! Old solution will reduce <a href="http://bluerobot.com/web/css/fouc.asp/" title="Flash Of Unstyled Content">FOUC</a> however</li>
+		</ul>
 		<h3>Version 0.2.1</h3>
 		<ul>
 			<li>Tweaked example code so that the background image doesn't slide around in IE7</li>
 			<li>Added filter:opacity() to support IE7. Opacity animations are still not supported yet.</li>
 			<li>Removed vestigial code from previous version</li>
-			<li>TODO: Still need to refactor how elements are animated. This will squash multiple bugs at once.</li>
+			<li><del>TODO: Still need to refactor how elements are animated. This will squash multiple bugs at once.</del></li>
 		</ul>
 		<h3>Version 0.2</h3>
 		<ul>
-			<li>Relies on UI, but animations are done with classes now (more flexibility/customization)</li>
+			<li><del>Relies on UI, but animations are done with classes now (more flexibility/customization)</del></li>
 			<li>More efficient description gradient animation handling</li>
 			<li>autoPlay fixed</li>
 			<li>Flexible width control (width param dropped)</li>
 			<li><del>TODO: drop <em>'efficient'</em> toggle and use a more optimized approach</del></li>
-			<li>BUG: neutralState isn't working properly</li>
+			<li><del>BUG: neutralState isn't working properly</del></li>
 		</ul>
 		<h3>Version 0.1</h3>
 		<ul>
@@ -266,7 +276,8 @@
 				pauseOnHover: true,		// If true, and autoPlay is enabled, the show will pause on hover
 				height: null,			// Override the default CSS height
 				expandedWidth: '480px', // Width of the expanded slide
-				neutralState: true		// If there should be a state when all pages are equal size (usually onMouseOut)
+				neutralState: true,		// If there should be a state when all pages are equal size (usually onMouseOut)
+				bgHeight: '340px'		// The height of the gradient image (bgDescription.png). Useful if you're modifying the image
 			});
 		});
 	</script>
