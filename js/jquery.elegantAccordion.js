@@ -54,9 +54,7 @@
 			} else { // Otherwise use pixels
 				expandedWidth = parseInt(base.options.expandedWidth);
 			}
-			base.neutralWidth = (100 / base.pages) + '%';
 			base.contractedWidth = (base.$el.width() - expandedWidth) / (base.pages - 1);
-			
 			
 			// If autoPlay functionality is included, then initialize the settings
 			if (base.options.autoPlay) {
@@ -79,8 +77,12 @@
 				base.gotoPage(base.$items.index(this) + 1);
 			},function(){
 				// base.gotoNeutral(true); // TODO add neutral states upon mouse-out
-				if (!base.clickStopped && base.options.autoPlay) {
-					base.startStop(true);
+				if (!base.clickStopped) {
+					if (base.options.autoPlay) {
+						base.startStop(true);
+					} else if (base.options.neutralState) {
+						base.gotoNeutral();
+					}
 				}
 			}).click(function () {
 				base.startStop(false);
@@ -92,6 +94,11 @@
 			if ((base.options.hashTags == true && !base.gotoHash()) || base.options.hashTags == false) {
 				base.gotoPage(1, false);
 			};
+			
+			if (base.options.neutralState) {
+				base.neutralWidth = (100 / base.pages) + '%';
+				base.gotoNeutral(false);
+			}
 		}
 			
 		base.gotoPage = function(page, animate) {
@@ -112,46 +119,49 @@
 			// Store the page to be shown
 			var $page = base.$items.eq(page - 1);
 			
-			if (animate !== false) {
-				$page.stop(true, true).animate(
-					{'width':base.options.expandedWidth},
-					base.options.animationTime,
-					base.options.easing
-				).children('h2').stop(true, true).animate({opacity: 0}, base.options.animationTime)
-				.end().children('div').stop(true, true).animate({
-					opacity: 1,
-					marginBottom: 0,
-					paddingBottom: 0
-				}, base.options.animationTime)
-				.end().siblings().stop(true, true).animate(
-					{'width':base.contractedWidth},
-					base.options.animationTime,
-					base.options.easing
-				).children('h2').stop(true, true).animate({opacity: .9}, base.options.animationTime)
-				.end().children('div').stop(true, true).animate({
-					opacity: 0,
-					marginBottom: '-340px',
-					paddingBottom: '340px'
-				}, base.options.animationTime);
-			} else {
-				$page.width(base.options.expandedWidth).switchClass('neutral', 'active')
-					.siblings().width(base.contractedWidth).removeClass('active neutral');
-			}
+			duration = (animate !== false) ? base.options.animationTime : 0;
+			
+			$page.stop(true, true).animate(
+				{'width':base.options.expandedWidth},
+				duration,
+				base.options.easing
+			);
+			$page.children('h2').stop(true, true).animate({opacity: 0}, duration);
+			$page.children('div').stop(true, true).animate({
+				opacity: 1,
+				marginBottom: 0,
+				paddingBottom: 0
+			}, duration);
+			$siblings = $page.siblings();
+			$siblings.stop(true, true).animate(
+				{'width':base.contractedWidth},
+				duration,
+				base.options.easing
+			);
+			$siblings.children('h2').stop(true, true).animate({opacity: .9}, duration);
+			$siblings.children('div').stop(true, true).animate({
+				opacity: 0,
+				marginBottom: '-' + base.options.bgHeight,
+				paddingBottom: base.options.bgHeight
+			}, duration);
 			
 			// Update local variable
 			base.currentPage = page;
 		};
 		
 		base.gotoNeutral = function(animate){
-			if (animate !== false) {
-				base.$items.stop(true, true).animate(
-					{'width':base.neutralWidth},
-					base.options.animationTime,
-					base.options.easing
-				).switchClass('active', 'neutral', base.options.animationTime);
-			} else {
-				base.$items.width(base.neutralWidth).switchClass('active', 'neutral');
-			}
+			duration = (animate !== false) ? base.options.animationTime : 0;
+			base.$items.stop(true, true).animate(
+				{'width':base.neutralWidth},
+				duration,
+				base.options.easing
+			);
+			base.$items.children('h2').stop(true, true).animate({opacity: .9}, duration);
+			base.$items.children('div').stop(true, true).animate({
+				opacity: 0,
+				marginBottom: '-' + base.options.bgHeight,
+				paddingBottom: base.options.bgHeight
+			}, duration);
 		};
 			
 		base.goForward = function() {
@@ -235,7 +245,8 @@
 		pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
 		height: null,					// Override the default CSS height
 		expandedWidth: '60%',			// Width of the expanded slide
-		neutralState: false				// If there should be a state when all pages are equal size (usually onMouseOut)
+		neutralState: false,			// If there should be a state when all pages are equal size (usually onMouseOut)
+		bgHeight: '340px'				// The height of the gradient image. Useful if you're modifying the image
 	};
 	
 	$.fn.eAccordion = function(options) {

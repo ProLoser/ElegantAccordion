@@ -104,19 +104,3 @@
     color: #333;
     text-decoration: underline;
 }
-
-/** Active States **/
-.accordion h2.active, .accordion .active h2 {
-	opacity: 0;
-	filter: alpha(opacity=0);
-}
-.accordion div.active, .accordion .active div {
-	opacity: .9;
-	filter: alpha(opacity=90);
-	margin-bottom: 0;
-	padding-bottom: 0;
-}
-.accordion div h2.active, .accordion .active div h2 {
-	opacity: 1;
-	filter: alpha(opacity=100);
-}
