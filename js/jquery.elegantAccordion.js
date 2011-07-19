@@ -72,7 +72,7 @@
 			}
 			
 			// Add background images if set
-			base.$items.each(function() {
+			base.$items.filter('[data-bg]').each(function() {
 				var $li = $(this);
 				$li.css('backgroundImage', 'url(' + $li.data('bg') + ')' ); 
 			});
