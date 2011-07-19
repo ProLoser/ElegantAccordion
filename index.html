@@ -99,6 +99,10 @@
 		.accordion {
 			clear: both;
 		}
+		ul.accordion li {
+			background-repeat: no-repeat;
+			background-position:  top left;
+		}
 		ul.accordion li.bg1{
 			background-image:url(images/1.jpg);
 		}
@@ -217,6 +221,13 @@
 });</pre> 
  
 		<h2>Changelog</h2>
+		<h3>Version 0.2.1</h3>
+		<ul>
+			<li>Tweaked example code so that the background image doesn't slide around in IE7</li>
+			<li>Added filter:opacity() to support IE7. Opacity animations are still not supported yet.</li>
+			<li>Removed vestigial code from previous version</li>
+			<li>TODO: Still need to refactor how elements are animated. This will squash multiple bugs at once.</li>
+		</ul>
 		<h3>Version 0.2</h3>
 		<ul>
 			<li>Relies on UI, but animations are done with classes now (more flexibility/customization)</li>
