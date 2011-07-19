@@ -106,9 +106,6 @@
 .accordion h2.active, .accordion .active h2 {
 	opacity: 0;
 }
-.accordion .bgGradient.active, .accordion .active .bgGradient {
-	bottom: 0;
-}
 .accordion div.active, .accordion .active div {
 	opacity: .9;
 	margin-bottom: 0;
@@ -116,7 +113,4 @@
 }
 .accordion div h2.active, .accordion .active div h2 {
 	opacity: 1;
-}
-.accordion div h2 span.active, .accordion .active div h2 span {
-	
 }
