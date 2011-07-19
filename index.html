@@ -211,7 +211,6 @@
 	pauseOnHover: true, // If true, and autoPlay is enabled, the show will pause on hover
 	height: null,		// Override the default CSS height
 	expandedWidth: '60%',	// Width of the expanded slide
-	efficient: true,	// If true, applies the state classes (active/neutral) to the li's instead of its children
 	neutralState: false // If there should be a state when all pages are equal size (usually onMouseOut)
 });</pre> 
  
@@ -234,7 +233,7 @@
 			<li>More efficient description gradient animation handling</li>
 			<li>autoPlay fixed</li>
 			<li>Flexible width control (width param dropped)</li>
-			<li>TODO: drop <em>'efficient'</em> toggle and use a more optimized approach</li>
+			<li><del>TODO: drop <em>'efficient'</em> toggle and use a more optimized approach</del></li>
 			<li>BUG: neutralState isn't working properly</li>
 		</ul>
 		<h3>Version 0.1</h3>
@@ -267,7 +266,6 @@
 				pauseOnHover: true,		// If true, and autoPlay is enabled, the show will pause on hover
 				height: null,			// Override the default CSS height
 				expandedWidth: '480px', // Width of the expanded slide
-				efficient: false,		// If true, applies the state classes (active/neutral) to the li's instead of its children
 				neutralState: true		// If there should be a state when all pages are equal size (usually onMouseOut)
 			});
 		});

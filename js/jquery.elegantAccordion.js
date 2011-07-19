@@ -113,39 +113,29 @@
 			var $page = base.$items.eq(page - 1);
 			
 			if (animate !== false) {
-				if (base.options.efficient) {
-					$page.stop(true, true).animate(
-						{'width':base.options.expandedWidth},
-						base.options.animationTime,
-						base.options.easing
-					).switchClass('neutral', 'active', base.options.animationTime).siblings().stop(true, true).animate({
-						'width':base.contractedWidth},
-						base.options.animationTime,
-						base.options.easing
-					).removeClass('active neutral', base.options.animationTime);
-				} else {
-					$page.stop(true, true).animate(
-						{'width':base.options.expandedWidth},
-						base.options.animationTime,
-						base.options.easing
-					).siblings().stop(true, true).animate({
-						'width':base.contractedWidth},
-						base.options.animationTime,
-						base.options.easing
-					);
-					// .find('*') Needs to be cached
-					$page.find('*').stop(true, true).switchClass('neutral', 'active', base.options.animationTime);
-					$page.siblings().find('*').stop(true, true).removeClass('active neutral', base.options.animationTime);
-				}
+				$page.stop(true, true).animate(
+					{'width':base.options.expandedWidth},
+					base.options.animationTime,
+					base.options.easing
+				).children('h2').stop(true, true).animate({opacity: 0}, base.options.animationTime)
+				.end().children('div').stop(true, true).animate({
+					opacity: 1,
+					marginBottom: 0,
+					paddingBottom: 0
+				}, base.options.animationTime)
+				.end().siblings().stop(true, true).animate(
+					{'width':base.contractedWidth},
+					base.options.animationTime,
+					base.options.easing
+				).children('h2').stop(true, true).animate({opacity: .9}, base.options.animationTime)
+				.end().children('div').stop(true, true).animate({
+					opacity: 0,
+					marginBottom: '-340px',
+					paddingBottom: '340px'
+				}, base.options.animationTime);
 			} else {
-				$page.width(base.options.expandedWidth).siblings().width(base.contractedWidth);
-				if (base.options.efficient) {
-					$page.switchClass('neutral', 'active');
-					$page.siblings().removeClass('active neutral');
-				} else {
-					$page.find('*').switchClass('neutral', 'active');
-					$page.siblings().find('*').removeClass('active neutral');
-				}
+				$page.width(base.options.expandedWidth).switchClass('neutral', 'active')
+					.siblings().width(base.contractedWidth).removeClass('active neutral');
 			}
 			
 			// Update local variable
@@ -154,26 +144,13 @@
 		
 		base.gotoNeutral = function(animate){
 			if (animate !== false) {
-				if (base.options.efficient) {
-					base.$items.stop(true, true).animate(
-						{'width':base.neutralWidth},
-						base.options.animationTime,
-						base.options.easing
-					).switchClass('active', 'neutral', base.options.animationTime);
-				} else {
-					base.$items.stop(true, true).animate(
-						{'width':base.neutralWidth},
-						base.options.animationTime,
-						base.options.easing
-					).find('*').switchClass('active', 'neutral', base.options.animationTime);
-				}
+				base.$items.stop(true, true).animate(
+					{'width':base.neutralWidth},
+					base.options.animationTime,
+					base.options.easing
+				).switchClass('active', 'neutral', base.options.animationTime);
 			} else {
-				base.$items.width(base.neutralWidth);
-				if (base.options.efficient) {
-					base.$items.switchClass('active', 'neutral');
-				} else {
-					base.$items.find('*').switchClass('active', 'neutral');
-				}
+				base.$items.width(base.neutralWidth).switchClass('active', 'neutral');
 			}
 		};
 			
@@ -258,7 +235,6 @@
 		pauseOnHover: true,             // If true, and autoPlay is enabled, the show will pause on hover
 		height: null,					// Override the default CSS height
 		expandedWidth: '60%',			// Width of the expanded slide
-		efficient: false,				// If true, applies the state classes (active/neutral) to the li's instead of its children
 		neutralState: false				// If there should be a state when all pages are equal size (usually onMouseOut)
 	};
 	
