@@ -256,7 +256,6 @@
 	};
 	
 	$.fn.eAccordion = function(options) {
-	  
 		if (typeof(options) == "object"){
 			return this.each(function(i){			
 				(new $.eAccordion(this, options));
@@ -271,6 +270,13 @@
 				}
 			});
 			
+		} else {
+			return this.each(function(i) {
+				var eSlide = $(this).data('ElegantAccordion');
+				if (eSlide) {
+					eSlide.gotoNeutral();
+				}
+			});
 		}
 		
   };
